@@ -3,6 +3,7 @@ from dataclasses import dataclass
 import numpy as np
 import torch
 import torchaudio
+import yaml
 from pytorch_lightning import LightningDataModule
 from torch.utils.data import Dataset, DataLoader
 
@@ -40,10 +41,10 @@ class VocosDataModule(LightningDataModule):
 
 class VocosDataset(Dataset):
     def __init__(self, cfg: DataConfig, train: bool):
-        with open(cfg.filelist_path) as f:
+        with open(cfg["filelist_path"]) as f:
             self.filelist = f.read().splitlines()
-        self.sampling_rate = cfg.sampling_rate
-        self.num_samples = cfg.num_samples
+        self.sampling_rate = cfg["sampling_rate"]
+        self.num_samples = cfg["num_samples"]
         self.train = train
 
     def __len__(self) -> int:
@@ -71,3 +72,10 @@ class VocosDataset(Dataset):
             y = y[:, : self.num_samples]
 
         return y[0]
+    
+    @classmethod
+    def from_config(cls, config_path):
+        with open(config_path, "r") as f:
+            config = yaml.safe_load(f)
+        dataset = cls(config["data"]["init_args"]["test_params"], False)
+        return dataset
