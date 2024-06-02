@@ -5,16 +5,16 @@ data:
   class_path: vocos.dataset.VocosDataModule
   init_args:
     train_params:
-      filelist_path: /project/6080355/shenranw/vocos/filelist.train
+      filelist_path: /project/6080355/shenranw/vocos/multilingual_filelist.train
       sampling_rate: 22050
-      num_samples: 11064
+      num_samples: 18883
       batch_size: 16
       num_workers: 8
 
     val_params:
-      filelist_path: /project/6080355/shenranw/vocos/filelist.val
+      filelist_path: /project/6080355/shenranw/vocos/multilingual_filelist.val
       sampling_rate: 22050
-      num_samples: 100
+      num_samples: 50
       batch_size: 16
       num_workers: 8
 
