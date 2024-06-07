@@ -77,20 +77,6 @@ class Vocos(nn.Module):
         model.load_state_dict(state_dict)
         model.eval()
         return model
-    
-    @classmethod
-    def from_checkpoint(cls, config_path, model_path):
-        model = cls.from_hparams(config_path)
-        state_dict = torch.load(model_path, map_location="cpu")
-        if isinstance(model.feature_extractor, EncodecFeatures):
-            encodec_parameters = {
-                "feature_extractor.encodec." + key: value
-                for key, value in model.feature_extractor.encodec.state_dict().items()
-            }
-            state_dict.update(encodec_parameters)
-        model.load_state_dict(state_dict)
-        model.eval()
-        return model
 
     @torch.inference_mode()
     def forward(self, audio_input: torch.Tensor, **kwargs: Any) -> torch.Tensor:

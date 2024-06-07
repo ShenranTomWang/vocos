@@ -7,14 +7,14 @@ data:
     train_params:
       filelist_path: /project/6080355/shenranw/vocos/filelist.train
       sampling_rate: 22050
-      num_samples: 11064
+      num_samples: 16384    # This is num_samples of each .wav file, not total number of samples in our dataaset!
       batch_size: 16
       num_workers: 8
 
     val_params:
       filelist_path: /project/6080355/shenranw/vocos/filelist.val
       sampling_rate: 22050
-      num_samples: 100
+      num_samples: 48384
       batch_size: 16
       num_workers: 8
 
@@ -88,6 +88,6 @@ trainer:
   # You might want to limit val batches when evaluating all the metrics, as they are time-consuming
   limit_val_batches: 100
   accelerator: gpu
-  strategy: ddp
+  strategy: dp
   devices: [0]
   log_every_n_steps: 100
